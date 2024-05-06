@@ -1,6 +1,8 @@
 <?php
 namespace DetectCMS\Systems;
 
+use simplehtmldom\HtmlDocument;
+
 class Wordpress extends \DetectCMS\DetectCMS {
 
 	public $methods = array(
@@ -30,9 +32,9 @@ class Wordpress extends \DetectCMS\DetectCMS {
 
 		if($data = $this->fetch($this->url."/readme.html")) {
 
-			require_once(dirname(__FILE__)."/../Thirdparty/simple_html_dom.php");
+			$htmlDocument = new HtmlDocument();
 
-			if($html = str_get_html($data)) {
+			if($html = $htmlDocument->load($data)) {
 
 				if($title = $html->find("title",0)) {
 
@@ -80,9 +82,9 @@ class Wordpress extends \DetectCMS\DetectCMS {
 
 		if($this->home_html) {
 
-			require_once(dirname(__FILE__)."/../Thirdparty/simple_html_dom.php");
+			$htmlDocument = new HtmlDocument();
 
-			if($html = str_get_html($this->home_html)) {
+			if($html = $htmlDocument->load($this->home_html)) {
 
 				if($meta = $html->find("meta[name='generator']",0)) {
 
@@ -127,9 +129,9 @@ class Wordpress extends \DetectCMS\DetectCMS {
 
 		if($this->home_html) {
 
-			require_once(dirname(__FILE__)."/../Thirdparty/simple_html_dom.php");
+			$htmlDocument = new HtmlDocument();
 
-			if($html = str_get_html($this->home_html)) {
+			if($html = $htmlDocument->load($this->home_html)) {
 
 				foreach($html->find('script') as $element) {
 					if (strpos($element->src, 'wp-includes') !==FALSE)
@@ -152,9 +154,9 @@ class Wordpress extends \DetectCMS\DetectCMS {
 
 		if($this->home_html) {
 
-			require_once(dirname(__FILE__)."/../Thirdparty/simple_html_dom.php");
+			$htmlDocument = new HtmlDocument();
 
-			if($html = str_get_html($this->home_html)) {
+			if($html = $htmlDocument->load($this->home_html)) {
 
 				foreach($html->find('link') as $element) {
 					if (strpos($element->href, 'wp-json') !==FALSE)

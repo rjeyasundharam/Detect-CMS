@@ -2,12 +2,31 @@
 
 namespace DetectCMS;
 
+require_once __DIR__ . '/Thirdparty/simple_html_dom.php';
+
 class DetectCMS
 {
 
     public $systems = [
         "Drupal",
-        "Wordpress"
+        "Wordpress",
+        "Joomla",
+        "Liferay",
+        "vBulletin",
+        "Magento",
+        "ExpressionEngine",
+        "Sitecore",
+        'Bohemiasoft',
+        'EshopRychle',
+        'Fastcentrik',
+        'Shopsys',
+        'Shoptet',
+        'Webgarden',
+        'Webnode',
+        'Laravel',
+        'Concrete5',
+        'Squarespace',
+        'Typo3'
     ];
 
     private $common_methods = ["generator_header", "generator_meta"];

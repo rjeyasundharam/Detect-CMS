@@ -1,0 +1,4 @@
+# Generally you should only ignore the root vendor directory.
+/vendor/
+composer.lock
+test.php
