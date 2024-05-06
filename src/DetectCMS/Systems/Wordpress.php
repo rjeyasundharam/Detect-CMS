@@ -31,17 +31,11 @@ class Wordpress extends \DetectCMS\DetectCMS {
 	public function readme() {
 
 		if($data = $this->fetch($this->url."/readme.html")) {
-
-			$htmlDocument = new HtmlDocument();
-
-			if($html = $htmlDocument->load($data)) {
-
+			if (is_string($data)) {
+				$html = new HtmlDocument($data);
 				if($title = $html->find("title",0)) {
-
 					return strpos($title->plaintext, "WordPress &rsaquo; ReadMe") !== FALSE;
-
 				}
-
 			}
 
 		}
@@ -80,20 +74,11 @@ class Wordpress extends \DetectCMS\DetectCMS {
 	 */
 	public function generator_meta() {
 
-		if($this->home_html) {
-
-			$htmlDocument = new HtmlDocument();
-
-			if($html = $htmlDocument->load($this->home_html)) {
-
-				if($meta = $html->find("meta[name='generator']",0)) {
-
-					return strpos($meta->content, "WordPress") !== FALSE;
-
-				}
-
+		if (is_string($this->home_html)) {
+			$html = new HtmlDocument($data);
+			if($meta = $html->find("meta[name='generator']",0)) {
+				return strpos($meta->content, "WordPress") !== FALSE;
 			}
-
 		}
 
 		return FALSE;
@@ -127,19 +112,12 @@ class Wordpress extends \DetectCMS\DetectCMS {
 	 */
 	public function scripts() {
 
-		if($this->home_html) {
-
-			$htmlDocument = new HtmlDocument();
-
-			if($html = $htmlDocument->load($this->home_html)) {
-
-				foreach($html->find('script') as $element) {
-					if (strpos($element->src, 'wp-includes') !==FALSE)
-						return true;
-				}
-
+		if (is_string($this->home_html)) {
+			$html = new HtmlDocument($data);
+			foreach($html->find('script') as $element) {
+				if (strpos($element->src, 'wp-includes') !==FALSE)
+					return true;
 			}
-
 		}
 
 		return FALSE;
@@ -152,16 +130,11 @@ class Wordpress extends \DetectCMS\DetectCMS {
 	 */
 	public function api() {
 
-		if($this->home_html) {
-
-			$htmlDocument = new HtmlDocument();
-
-			if($html = $htmlDocument->load($this->home_html)) {
-
-				foreach($html->find('link') as $element) {
-					if (strpos($element->href, 'wp-json') !==FALSE)
-						return true;
-				}
+		if (is_string($this->home_html)) {
+			$html = new HtmlDocument($data);
+			foreach($html->find('link') as $element) {
+				if (strpos($element->href, 'wp-json') !==FALSE)
+					return true;
 			}
 
 		}

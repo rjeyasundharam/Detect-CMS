@@ -50,7 +50,6 @@ class Drupal extends \DetectCMS\DetectCMS {
 		if($data = $this->fetch($this->url."/misc/drupal.js")) {
             $lines = explode(PHP_EOL, $data);
             for($i=0;$i<count($lines);$i++) {
-            	print_r($lines[$i]);
                 if(strpos($lines[$i], "Drupal") !== FALSE) {
                     return TRUE;
                 }
@@ -133,20 +132,11 @@ class Drupal extends \DetectCMS\DetectCMS {
 	 */
 	public function generator_meta() {
 
-		if($this->home_html) {
-
-			$htmlDocument = new HtmlDocument();
-
-			if($html = $htmlDocument->load($this->home_html)) {
-
-				if($meta = $html->find("meta[name='generator'], meta[name='Generator']",0)) {
-
-					return strpos($meta->content, "Drupal") !== FALSE;
-
-				}
-
+		if(is_string($this->home_html)) {
+			$html = new HtmlDocument($this->home_html);
+			if($meta = $html->find("meta[name='generator'], meta[name='Generator']",0)) {
+				return strpos($meta->content, "Drupal") !== FALSE;
 			}
-
 		}
 
 		return FALSE;
@@ -182,21 +172,11 @@ class Drupal extends \DetectCMS\DetectCMS {
 	* @return [boolean]
 	*/ 
 	public function settings_json() {
-
-		if($this->home_html) {
-
-			$htmlDocument = new HtmlDocument();
-			
-			if($html = $htmlDocument->load($this->home_html)) {
-
-				return $html->find("script[data-drupal-selector]",0);
-
-			}
-
+		if(is_string($this->home_html)) {
+			$html = new HtmlDocument($this->home_html);
+			return $html->find("script[data-drupal-selector]",0);
 		}
-
 		return FALSE;
-
 	}
 
 }
