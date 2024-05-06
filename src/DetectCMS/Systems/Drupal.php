@@ -7,6 +7,7 @@ class Drupal extends \DetectCMS\DetectCMS {
 
 	public $methods = array(
 		"readme_d6",
+		"misc_d7",
 		"changelog",
 		"changelog_d8",
 		"generator_header",
@@ -40,6 +41,24 @@ class Drupal extends \DetectCMS\DetectCMS {
                 return FALSE;
                 }
         }
+
+	/**
+	 * Check misc/drupal.js content
+	 * @return [boolean]
+	 */
+	public function misc_d7() {
+		if($data = $this->fetch($this->url."/misc/drupal.js")) {
+            $lines = explode(PHP_EOL, $data);
+            for($i=0;$i<count($lines);$i++) {
+            	print_r($lines[$i]);
+                if(strpos($lines[$i], "Drupal") !== FALSE) {
+                    return TRUE;
+                }
+            }
+            return FALSE;
+		}
+
+	}
 	/**
 	 * See if CHANGELOG.TXT exists, and check for Drupal
 	 * @return [boolean]
