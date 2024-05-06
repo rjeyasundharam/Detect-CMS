@@ -75,7 +75,7 @@ class Wordpress extends \DetectCMS\DetectCMS {
 	public function generator_meta() {
 
 		if (is_string($this->home_html)) {
-			$html = new HtmlDocument($data);
+			$html = new HtmlDocument($this->home_html);
 			if($meta = $html->find("meta[name='generator']",0)) {
 				return strpos($meta->content, "WordPress") !== FALSE;
 			}
@@ -113,7 +113,7 @@ class Wordpress extends \DetectCMS\DetectCMS {
 	public function scripts() {
 
 		if (is_string($this->home_html)) {
-			$html = new HtmlDocument($data);
+			$html = new HtmlDocument($this->home_html);
 			foreach($html->find('script') as $element) {
 				if (strpos($element->src, 'wp-includes') !==FALSE)
 					return true;
@@ -131,7 +131,7 @@ class Wordpress extends \DetectCMS\DetectCMS {
 	public function api() {
 
 		if (is_string($this->home_html)) {
-			$html = new HtmlDocument($data);
+			$html = new HtmlDocument($this->home_html);
 			foreach($html->find('link') as $element) {
 				if (strpos($element->href, 'wp-json') !==FALSE)
 					return true;
